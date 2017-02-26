@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <title>Buscador WEB</title>
+
+        <script src="js/jquery.min.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+        <style>
+            .clearfix:after {
+                visibility: hidden;
+                display: block;
+                font-size: 0;
+                content: " ";
+                clear: both;
+                height: 0;
+            }
+            .clearfix { display: inline-block; }
+            /* start commented backslash hack \*/
+            * html .clearfix { height: 1%; }
+            .clearfix { display: block; }
+            /* close commented backslash hack */
+            .respuestas { 
+                font-size:10px;
+                margin:0 auto;
+                border:3px solid #eeeeee;
+                background-color:#fafafa;
+                width:400px;
+            }
+            .respuestas .search{
+                float:left;
+                margin:0px;
+                text-align:left;
+                position:relative;
+                width:250px;
+            }
+            .respuestas .coincidencias {
+                float:left;
+                text-align: right;
+                position:relative;
+                width:130px;
+            }
+            .consulta {
+                padding:0px 5px;
+                position:relative;
+                width:395px;
+            }
+            .consulta:hover {
+                cursor:pointer;
+                background-color:#eeeeee;
+            }
+        </style>
+        <script type="text/javascript">
+             $('.consulta').on('click', function(){
+                   alert("ey");
+               }) ;
+               $('respuestas').click(function() {
+                   alert("hey");
+               })
+            function clear() {
+                $('.respuestas').html('');
+            }
+
+            function add(array) {
+                var re = /(.*)\s\((\d*)\)/g;
+                var result = re.exec(array);
+                $('.respuestas').append('<div class=\'consulta clearfix\'><div class=\'search\'>' + result[1] + '</div><div class=\'coincidencias\'>' + result[2] + ' coincidencias</div></div>');
+                $('.search').on('click', function(){
+                   window.location.href = 'https://www.google.com/search?q=' + $(this).text() + "&ie=utf-8&oe=utf-8";
+               });
+            }
+        </script>
+    </head>
+    <body>
+    <center>
+        <br />
+        <br />
+        <br />
+        <APPLET CODE="WebApplet.class" codebase="code"
+                NAME="WebApplet"  MAYSCRIPT
+                HEIGHT=50 WIDTH=400>
+        </applet>
+    </center>
+    <div class="respuestas clearfix">
+
+    </div>
+    <br style="clear:both" />
+</body>
+
+</html>
