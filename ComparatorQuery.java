@@ -4,7 +4,6 @@ public class ComparatorQuery implements ComparatorIF<Query> {
 
     @Override
     public int compare(Query e1, Query e2) {
-        System.out.println("Comparing...");
         if (lt(e1, e2)) {
             return LT;
         } else if (gt(e1, e2)) {
@@ -18,7 +17,6 @@ public class ComparatorQuery implements ComparatorIF<Query> {
 
     @Override
     public boolean lt(Query e1, Query e2) {
-        // return e1.getFreq() > e2.getFreq();
         if (e1.getFreq() == e2.getFreq()) {
             return e1.compareTo(e2) < 0;
         } else if (e1.getFreq() > e2.getFreq()) {
@@ -29,7 +27,6 @@ public class ComparatorQuery implements ComparatorIF<Query> {
 
     @Override
     public boolean eq(Query e1, Query e2) {
-        // return e1.getFreq() == e2.getFreq();
         if (e1.getFreq() == e2.getFreq()) {
             return e1.compareTo(e2) == 0;
         }
@@ -38,7 +35,6 @@ public class ComparatorQuery implements ComparatorIF<Query> {
 
     @Override
     public boolean gt(Query e1, Query e2) {
-        // return e1.getFreq() < e2.getFreq();
         if (e1.getFreq() == e2.getFreq()) {
             return e1.compareTo(e2) > 0;
         } else if (e1.getFreq() < e2.getFreq()) {

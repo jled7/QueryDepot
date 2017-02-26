@@ -11,7 +11,7 @@
  3. Fichero de operaciones, que contendrá el nombre del fichero de operaciones que se desean
  realizar sobre el contenido del depósito.
  *
- java ­jar eped2015.jar <estructura> <consultas> <operaciones>
+ java ­jar QueryMain.jar <estructura> <consultas> <operaciones>
  */
 import java.io.*;
 

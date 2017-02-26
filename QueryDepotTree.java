@@ -174,9 +174,6 @@ public class QueryDepotTree extends QueryDepot {
                 // hoja.setRoot(chData);
                 incFreqQuery(strTxt);
             }
-
-            // A IMLEMENTAR POR CADA UNO/
-            // A IMLEMENTAR POR CADA UNO/A
             return;
         }
 
@@ -306,17 +303,6 @@ public class QueryDepotTree extends QueryDepot {
                 return hoja;
             }
         }
-        // A IMLEMENTAR POR CADA UNO/A
-        // A IMLEMENTAR POR CADA UNO/A
-        // A IMLEMENTAR POR CADA UNO/A
-        // A IMLEMENTAR POR CADA UNO/A
-        // A IMLEMENTAR POR CADA UNO/A
-        // A IMLEMENTAR POR CADA UNO/
-        // A IMLEMENTAR POR CADA UNO/A
-        // A IMLEMENTAR POR CADA UNO/A
-        // A IMLEMENTAR POR CADA UNO/
-        // A IMLEMENTAR POR CADA UNO/A
-
         return null;
     }
 
