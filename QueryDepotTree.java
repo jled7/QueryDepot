@@ -1,33 +1,34 @@
 
-import arbol.TreeIF;
-import arbol.treeDynamic.TreeDynamic;
-import comun.IteratorIF;
-import lista.ListIF;
-import lista.dinamica.ListaDinamica;
+import lib.TreeIF;
+import lib.Tree;
+import lib.IteratorIF;
+import lib.ListIF;
+import lib.List;
 
 /**
  * int x = Character.getNumericValue(element.charAt(2));
  */
 public class QueryDepotTree extends QueryDepot {
 
-    //Atributos
-    private TreeIF<Character> treeOfQueries;//{T,QueueIF<TreeIF<T>> children}
+    // Atributos
+    private TreeIF<Character> treeOfQueries;// {T,QueueIF<TreeIF<T>> children}
 
     public QueryDepotTree() {
-        //crear el nodo(arbol) raiz del arbol de caracteres
-        treeOfQueries = new TreeDynamic<Character>();
+        // crear el nodo(arbol) raiz del arbol de caracteres
+        treeOfQueries = new Tree<Character>();
     }
 
     /**
      * @param strTxt
      * @return frecuencia de las consultas con texto 'strTxt' Si no es
-     * encontrado devuelve cero. Invoca a la funcion recursiva 'getQueryRec(..)'
+     *         encontrado devuelve cero. Invoca a la funcion recursiva
+     *         'getQueryRec(..)'
      */
     @Override
     public int getFreqQuery(String strTxt) {
         int val = 0;
         Query qAux = getQuery(strTxt);
-        if (qAux != null) {//encontrado            
+        if (qAux != null) {// encontrado
             val = qAux.getFreq();
         }
         return val;
@@ -37,9 +38,9 @@ public class QueryDepotTree extends QueryDepot {
     public void incFreqQuery(String strTxt) {
         TreeIF<Character> hoja = null;
         TreeIF<Character> nodo = null;
-        //(nodoActual, textoBuscado, indice, bPrefijo)
+        // (nodoActual, textoBuscado, indice, bPrefijo)
         nodo = getQueryRec(this.treeOfQueries, strTxt, 0, false);
-        if (nodo != null) {//nodo encontrado
+        if (nodo != null) {// nodo encontrado
             hoja = getHojaUnderCurrent(nodo);
             int val = hoja.getRoot();
             char chData = (char) (val + 1);
@@ -54,9 +55,9 @@ public class QueryDepotTree extends QueryDepot {
         TreeIF<Character> hoja = null;
         TreeIF<Character> nodo = null;
 
-        //(nodoActual, textoBuscado, indice, bPrefijo)
+        // (nodoActual, textoBuscado, indice, bPrefijo)
         nodo = getQueryRec(this.treeOfQueries, strTxt, 0, false);
-        if (nodo != null) {//nodo encontrado
+        if (nodo != null) {// nodo encontrado
             hoja = getHojaUnderCurrent(nodo);
             int val = hoja.getRoot();
             char chData = (char) (val - 1);
@@ -71,20 +72,18 @@ public class QueryDepotTree extends QueryDepot {
      * 'strText'.
      *
      * @param strTxt
-     * @return, la consulta, o null si no es encontrada. Nota: Lo que devuelve
-     * es una copia del dato en el arbol como objeto Query.
+     *               @return, la consulta, o null si no es encontrada. Nota: Lo que
+     *               devuelve es una copia del dato en el arbol como objeto Query.
      */
     public Query getQuery(String strTxt) {
         TreeIF<Character> hoja = null;
         Query qRet = null;
         TreeIF<Character> nodo = null;
-        //System.out.println(treeOfQueries);
-        //(nodoActual, textoBuscado, indice, bPrefijo)
+        // System.out.println(treeOfQueries);
+        // (nodoActual, textoBuscado, indice, bPrefijo)
         nodo = getQueryRec(this.treeOfQueries, strTxt, 0, false);
 
-        if (nodo != null) {//nodo encontrado
-            // A IMLEMENTAR POR CADA UNO/
-            // A IMLEMENTAR POR CADA UNO/A
+        if (nodo != null) {// nodo encontrado
             hoja = getHojaUnderCurrent(nodo);
             qRet = new Query(strTxt);
             int val = hoja.getRoot() - 32;
@@ -102,11 +101,11 @@ public class QueryDepotTree extends QueryDepot {
     @Override
     public ListIF<Query> listOfQueriesByPrefix(String prefix) {
         TreeIF<Character> nodoBusca = null;
-        ListIF<Query> listReturn = new ListaDinamica<Query>();
+        ListIF<Query> listReturn = new List<Query>();
 
-        //primero comprobar si la subcadena esta en el arbol
-        nodoBusca = getQueryRec(this.treeOfQueries, prefix, 0, true);//getQueryRec(TreeIF,strTxt,index,bPrefix)
-        if (nodoBusca != null) {//ahora tomar todas las consultas a partir de este nodo
+        // primero comprobar si la subcadena esta en el arbol
+        nodoBusca = getQueryRec(this.treeOfQueries, prefix, 0, true);// getQueryRec(TreeIF,strTxt,index,bPrefix)
+        if (nodoBusca != null) {// ahora tomar todas las consultas a partir de este nodo
             getAllQueriesBelowByFreq(nodoBusca, prefix, listReturn);
         }
 
@@ -120,7 +119,7 @@ public class QueryDepotTree extends QueryDepot {
      */
     @Override
     public int numQueries() {
-        //uso metodo recursivo para contar los nodos sin hijos
+        // uso metodo recursivo para contar los nodos sin hijos
         int cuantas = cuentaHojas(this.treeOfQueries);
         return cuantas;
     }
@@ -134,8 +133,8 @@ public class QueryDepotTree extends QueryDepot {
      * @param strTxt
      */
     public void insert(String strTxt) {
-        //invocar metodo recursivo        
-        insertRec(treeOfQueries, strTxt, 0);//(currentNode,qElem,index)
+        // invocar metodo recursivo
+        insertRec(treeOfQueries, strTxt, 0);// (currentNode,qElem,index)
     }
 
     /**
@@ -161,18 +160,18 @@ public class QueryDepotTree extends QueryDepot {
         TreeIF<Character> hoja = null;
         int len = strTxt.length();
 
-        //*Caso base:falta grabar la frecuencia como hoja
-        if (index == len) {   //comprobar si es una consulta en este punto (estamos en la ultima letra)
+        // *Caso base:falta grabar la frecuencia como hoja
+        if (index == len) { // comprobar si es una consulta en este punto (estamos en la ultima letra)
             hoja = getHojaUnderCurrent(currentNode);
             if (hoja == null) {
-                hoja = new TreeDynamic<>();
+                hoja = new Tree<>();
                 char chData = 33;
                 hoja.setRoot(chData);
                 currentNode.addChild(hoja);
             } else {
-                //int val = hoja.getRoot();
-                //char chData = (char) (val + 1);
-                //hoja.setRoot(chData);
+                // int val = hoja.getRoot();
+                // char chData = (char) (val + 1);
+                // hoja.setRoot(chData);
                 incFreqQuery(strTxt);
             }
 
@@ -181,22 +180,22 @@ public class QueryDepotTree extends QueryDepot {
             return;
         }
 
-        //*Caso recursivo: insertar caracter como hijo y continuar hacia abajo        
-        //siguiente caracter a guardar
+        // *Caso recursivo: insertar caracter como hijo y continuar hacia abajo
+        // siguiente caracter a guardar
         Character chData = strTxt.charAt(index);
 
-        //buscar letra 'chData' como descendiente de 'currentNode'
+        // buscar letra 'chData' como descendiente de 'currentNode'
         ListIF<TreeIF<Character>> childrenOfCur = currentNode.getChildren();
-        TreeIF<Character> childBuscado = getVertice(chData, childrenOfCur);//busqueda lineal
-        if (childBuscado == null) { //crear nuevo nodo con{chData, cola<Tree> vacia}
-            childBuscado = new TreeDynamic<Character>(chData);
+        TreeIF<Character> childBuscado = getVertice(chData, childrenOfCur);// busqueda lineal
+        if (childBuscado == null) { // crear nuevo nodo con{chData, cola<Tree> vacia}
+            childBuscado = new Tree<Character>(chData);
             currentNode.addChild(childBuscado);
         }
-        //ahora el actual es el nuevo nodo
+        // ahora el actual es el nuevo nodo
         currentNode = childBuscado;
-        //==Llamada recursiva=\\
+        // ==Llamada recursiva=\\
         insertRec(currentNode, strTxt, index + 1);
-        //====================//
+        // ====================//
     }
 
     /**
@@ -205,48 +204,49 @@ public class QueryDepotTree extends QueryDepot {
      * lo recorre hasta llegar a un camino sin salida o la hoja buscada.
      *
      * @param currentNode
-     * @param strTxt, texto de la consulta
-     * @param index, indice de cada caracter en 'strTxt'
-     * @param bPrefix, si es true se devuelve el nodo con la ultima letra sin
-     * comprobar que es consulta completa.
-     * @return, el nodo justo sobre la hoja con la frecuencia de la consulta, o
-     * null si no es encontrada.
+     * @param strTxt,     texto de la consulta
+     * @param index,      indice de cada caracter en 'strTxt'
+     * @param bPrefix,    si es true se devuelve el nodo con la ultima letra sin
+     *                    comprobar que es consulta completa.
+     *                    @return, el nodo justo sobre la hoja con la frecuencia de
+     *                    la consulta, o
+     *                    null si no es encontrada.
      */
     private TreeIF<Character> getQueryRec(TreeIF<Character> currentNode, String strTxt, int index, boolean bPrefix) {
         TreeIF<Character> hoja = null;
         int len = strTxt.length();
-        //*Casos base, la frecuencia como hoja
+        // *Casos base, la frecuencia como hoja
         if (index == len) {
-            if (bPrefix) {//solo se busca una parte de la consulta
+            if (bPrefix) {// solo se busca una parte de la consulta
                 return currentNode;
             }
 
-            //comprobar si es una consulta en este punto (estamos en la ultima letra)
+            // comprobar si es una consulta en este punto (estamos en la ultima letra)
             hoja = getHojaUnderCurrent(currentNode);
-            if (hoja != null) { //La consulta  existe
+            if (hoja != null) { // La consulta existe
 
                 return currentNode;
-            } else {//no encontrada
+            } else {// no encontrada
                 return null;
             }
         }
 
-        //*Caso recursivo: insertar caracter como hijo y continuar hacia abajo        
-        //siguiente caracter a guardar
+        // *Caso recursivo: insertar caracter como hijo y continuar hacia abajo
+        // siguiente caracter a guardar
         Character chData = strTxt.charAt(index);
 
-        //buscar letra 'chData' como descendiente de 'currentNode'
+        // buscar letra 'chData' como descendiente de 'currentNode'
         ListIF<TreeIF<Character>> childrenOfCur = currentNode.getChildren();
-        TreeIF<Character> childBuscado = getVertice(chData, childrenOfCur);//busqueda lineal
-        if (childBuscado == null) { //crear nuevo nodo con{chData, cola<Tree> vacia}
+        TreeIF<Character> childBuscado = getVertice(chData, childrenOfCur);// busqueda lineal
+        if (childBuscado == null) { // crear nuevo nodo con{chData, cola<Tree> vacia}
             return null;
         }
 
-        //ahora el actual es el nuevo nodo
+        // ahora el actual es el nuevo nodo
         currentNode = childBuscado;
-        //==Llamada recursiva=\\
+        // ==Llamada recursiva=\\
         return getQueryRec(currentNode, strTxt, index + 1, bPrefix);
-        //====================//
+        // ====================//
     }
 
     /**
@@ -256,35 +256,35 @@ public class QueryDepotTree extends QueryDepot {
      *
      * @param currentNode
      * @param strTxtGrow, el texto va creciendo con cada letra encontrada hasta
-     * llegar a una hoja
-     * @param listParam, lista con las consultas encontradas
+     *                    llegar a una hoja
+     * @param listParam,  lista con las consultas encontradas
      */
     private void getAllQueriesBelowByFreq(TreeIF<Character> currentNode, String strTxtGrow, ListIF<Query> listParam) {
-        //*Casos base, llegado a hoja
-        if (currentNode.isLeaf()) {   //guardar la consulta como objeto 'Query'
+        // *Casos base, llegado a hoja
+        if (currentNode.isLeaf()) { // guardar la consulta como objeto 'Query'
             Query qNew = new Query(strTxtGrow);
             int val = currentNode.getRoot() - 32; // OJO!!
             qNew.setFreq(val);
-            //uso metodo auxiliar para insertar por orden de frecuencia
+            // uso metodo auxiliar para insertar por orden de frecuencia
             insertByFrec(qNew, listParam);
-            return;//fin de la rama
+            return;// fin de la rama
         }
 
-        //*Caso recursivo: insertar caracter como hijo y continuar hacia abajo                
-        //buscar letra 'chData' como descendiente de 'currentNode'
+        // *Caso recursivo: insertar caracter como hijo y continuar hacia abajo
+        // buscar letra 'chData' como descendiente de 'currentNode'
         ListIF<TreeIF<Character>> childrenOfCur = currentNode.getChildren();
         IteratorIF<TreeIF<Character>> itChildren = childrenOfCur.getIterator();
-        while (itChildren.hasNext()) {//explorar todas las ramass
+        while (itChildren.hasNext()) {// explorar todas las ramass
             TreeIF<Character> child = itChildren.getNext();
             String strChild = strTxtGrow;
-            //siguiente caracter a guardar
+            // siguiente caracter a guardar
             if (!child.isLeaf()) {
                 Character chData = child.getRoot();
-                strChild += chData;//"cas"+'o' -> "caso"
+                strChild += chData;// "cas"+'o' -> "caso"
             }
-            //==Llamada recursiva=\\
+            // ==Llamada recursiva=\\
             getAllQueriesBelowByFreq(child, strChild, listParam);
-            //====================//
+            // ====================//
         }
     }
 
@@ -293,11 +293,12 @@ public class QueryDepotTree extends QueryDepot {
      * debajo con el numero que indica la frecuencia como hoja.
      *
      * @param currentNode
-     * @return, el nodo hoja con la frecuencia o null si no existe.
+     *                    @return, el nodo hoja con la frecuencia o null si no
+     *                    existe.
      */
     private TreeIF<Character> getHojaUnderCurrent(TreeIF<Character> currentNode) {
         TreeIF<Character> hoja;
-        ListIF<TreeIF<Character>> childrenOfCur = currentNode.getChildren();        
+        ListIF<TreeIF<Character>> childrenOfCur = currentNode.getChildren();
         IteratorIF<TreeIF<Character>> itChildren = childrenOfCur.getIterator();
         while (itChildren.hasNext()) {
             hoja = itChildren.getNext();
@@ -330,21 +331,21 @@ public class QueryDepotTree extends QueryDepot {
      * @param index
      */
     private int cuentaHojas(TreeIF<Character> currentNode) {
-        int accValue = 0;//sera la suma de los hijos hoja
+        int accValue = 0;// sera la suma de los hijos hoja
 
-        //*Caso base: ultimo caracter ya fue guardado 
-        if (currentNode.isLeaf()) {//hoja (nodo con la frecuencia de la consulta)
+        // *Caso base: ultimo caracter ya fue guardado
+        if (currentNode.isLeaf()) {// hoja (nodo con la frecuencia de la consulta)
             return 1;
         }
 
-        //*Caso recursivo: insertar caracter como hijo y continuar hacia abajo                
+        // *Caso recursivo: insertar caracter como hijo y continuar hacia abajo
         ListIF<TreeIF<Character>> childrenOfCur = currentNode.getChildren();
         IteratorIF<TreeIF<Character>> itChildren = childrenOfCur.getIterator();
         while (itChildren.hasNext()) {
             TreeIF<Character> child = itChildren.getNext();
-            //==Llamada recursiva=\\
-            accValue += cuentaHojas(child);//acumular hojas bajo este nodo
-            //====================//
+            // ==Llamada recursiva=\\
+            accValue += cuentaHojas(child);// acumular hojas bajo este nodo
+            // ====================//
         }
 
         return accValue;
@@ -355,7 +356,7 @@ public class QueryDepotTree extends QueryDepot {
      *
      * @param info
      * @param listParam
-     * @return, elemento Tree, o null si no es encontrado
+     *                  @return, elemento Tree, o null si no es encontrado
      */
     private TreeIF<Character> getVertice(Character info, ListIF<TreeIF<Character>> listParam) {
 
@@ -381,7 +382,7 @@ public class QueryDepotTree extends QueryDepot {
 
         ListIF<Query> listAllQ = new ListaDinamica<Query>();
 
-        //Tomar todas las consultas a partir de la raiz 
+        // Tomar todas las consultas a partir de la raiz
         getAllQueriesBelowByFreq(this.treeOfQueries, "", listAllQ);
 
         IteratorIF<Query> itQ = listAllQ.getIterator();

@@ -16,65 +16,56 @@
 import java.io.*;
 
 /**
- Esta clase lee y analiza los datos de entrada.
+ * Esta clase lee y analiza los datos de entrada.
  */
-public class Configuracion
-{
+public class Configuracion {
 
     public char chEstructura = ' ';
-    public String rutaConsultas = ""; //"consultas.txt"
-    public String rutaOperaciones = "";//"operaciones.txt"
+    public String rutaConsultas = ""; // "consultas.txt"
+    public String rutaOperaciones = "";// "operaciones.txt"
 
     /**
-     Comprobar los argumentos (son tres obligatorios)
-     java QueryMain fichero_consultas fichero_operaciones
-     Ej: $> java QueryMain L consultas.txt operaciones.txt
+     * Comprobar los argumentos (son tres obligatorios)
+     * java QueryMain fichero_consultas fichero_operaciones
+     * Ej: $> java QueryMain L consultas.txt operaciones.txt
      */
-    public void argumentosPrograma(String args[])
-    {
+    public void argumentosPrograma(String args[]) {
         File fileCheck;
 
-        if (args.length < 3)
-        {
+        if (args.length < 3) {
             System.out.println("'\nFaltan argumentos");
             ayuda();
             System.exit(1);
         }
 
-        try
-        {
-            chEstructura = args[0].toUpperCase().charAt(0); //es un solo caracter
-            switch (chEstructura)
-            {
+        try {
+            chEstructura = args[0].toUpperCase().charAt(0); // es un solo caracter
+            switch (chEstructura) {
                 case 'L':
-                    //System.out.println("'" + chEstructura + "' QueryDepotList");
+                    // System.out.println("'" + chEstructura + "' QueryDepotList");
                     break;
                 case 'T':
-                    //System.out.println("'" + chEstructura + "' QueryDepotTree");
+                    // System.out.println("'" + chEstructura + "' QueryDepotTree");
                     break;
                 default:
                     throw new Exception("La estructura debe ser 'L' / 'T'");
-            }            
+            }
 
-            //fichero_entrada consultas
+            // fichero_entrada consultas
             rutaConsultas = args[1];
             fileCheck = new File(rutaConsultas);
-            if (!fileCheck.exists())
-            {
+            if (!fileCheck.exists()) {
                 throw new Exception("El fichero de consultas: " + rutaConsultas + " no existe");
             }
 
-            //fichero_entrada operaciones
+            // fichero_entrada operaciones
             rutaOperaciones = args[2];
             fileCheck = new File(rutaOperaciones);
-            if (!fileCheck.exists())
-            {
+            if (!fileCheck.exists()) {
                 throw new Exception("El fichero de operaciones: " + rutaOperaciones + " no existe");
             }
 
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("\nFallo leyendo argumentos: " + ex.getMessage());
             ayuda();
             System.exit(1);
@@ -83,13 +74,12 @@ public class Configuracion
     }
 
     /**
-     Muestra la sintaxis para invocar al programa
-     Comprobar los argumentos
-     java ­jar eped2015.jar <estructura> <consultas> <operaciones>
-     Ej: $> java QueryMain L consultas.txt operaciones.txt
+     * Muestra la sintaxis para invocar al programa
+     * Comprobar los argumentos
+     * java ­jar eped2015.jar <estructura> <consultas> <operaciones>
+     * Ej: $> java QueryMain L consultas.txt operaciones.txt
      */
-    static void ayuda()
-    {
+    static void ayuda() {
         String strhelp = "\nQueryMain.jar/class \n"
                 + "(Estrategias de Programacion y Estructuras de Datos. Curso 2014-2015).\n"
                 + "Sintaxis:\n JAVA QueryMain L/T fichero_consultas fichero_operaciones\n"

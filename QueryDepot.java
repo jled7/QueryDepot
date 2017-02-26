@@ -1,8 +1,8 @@
 
-import comun.ComparatorIF;
-import comun.IteratorIF;
-import lista.ListIF;
-import lista.dinamica.ListaDinamica;
+import lib.ComparatorIF;
+import lib.IteratorIF;
+import lib.ListIF;
+import lib.List;
 
 /**
  * Nos interesa conocer el texto de la consulta (una cadena de caracteres) junto
@@ -15,7 +15,7 @@ import lista.dinamica.ListaDinamica;
  */
 public abstract class QueryDepot {
 
-    private static ListIF<Query> listaQueriesSortedFrec;//(axiliar)ordenada por frecuencia 
+    private static ListIF<Query> listaQueriesSortedFrec;// (axiliar)ordenada por frecuencia
 
     /**
      * Devuelve el número de consultas diferentes (sin contar repeticiones) que
@@ -39,7 +39,7 @@ public abstract class QueryDepot {
      * comiencen por dicho prefijo
      *
      * @returns la lista de consultas ordenada por frecuencias y orden
-     * lexicográfico en caso de coincidencia de frecuencia
+     *          lexicográfico en caso de coincidencia de frecuencia
      * @param el prefijo
      */
     abstract public ListIF<Query> listOfQueriesByPrefix(String prefix);
@@ -83,7 +83,7 @@ public abstract class QueryDepot {
             }
             aux = aux.getTail();
         }
-        if(!inserted)
+        if (!inserted)
             aux.insert(element);
     }
 
